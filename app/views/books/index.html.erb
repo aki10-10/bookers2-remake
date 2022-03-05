@@ -1,0 +1,63 @@
+<p id="notice"></p>
+<div class="container">
+   <!--エラーーメッセージ-->
+  <% if @newbook.errors.any? %>
+    <div class="error">
+      <h3><%= @newbook.errors.count %> errors prohibited this obj from being saved</h3>
+      <ul>
+        <% @newbook.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-3">
+      <h2>User info</h2>
+      <%= render "users/user_info",user:@user %>
+      <%= render "newbook",book: @newbook %>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <h2>Books</h2>
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Opinion</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @books.each do |book| %>
+            <tr>
+              <td>
+                <%= link_to user_path(book.user_id) do %>
+                  <%= image_tag @user.get_profile_image("50x50") %>
+                <% end %>  
+              </td>
+              <td><%= link_to book.title, book_path(book.id) %></td>
+              <td><%= book.body %></td>
+              <% if book.favorited_by?(current_user) %>
+                <td>
+                    <%= link_to book_favorites_path(book.id), method: :delete do %>
+                      ♡<%= book.favorites.count %> いいね
+                    <% end %>
+                </td>
+              <% else %>
+              　<td>
+                  <%= link_to book_favorites_path(book.id),method: :post do %>
+                    ♡<%= book.favorites.count %> いいね
+                  <% end %>  
+                </td> 
+              <% end %>
+              <td>
+                コメント件数: <%= book.book_comments.count %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

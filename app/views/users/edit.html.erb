@@ -1,0 +1,32 @@
+<p id="notice"></p>
+<% if @user.errors.any? %>
+  <div class="error">
+    <h3><%= @user.errors.count %> errors prohibited this obj from being saved</h3>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+     </ul>
+  </div>
+<% end %>  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-8 px-sm-0 mx-auto">
+      <%= form_with model: @user do |f| %>
+        <div class="form-group">
+          <label for="user_name">Name</label>
+          <%= f.text_field :name, class:"form-control" %>
+        </div>
+        <div class="form-group">Image</div>
+          <%= f.file_field :profile_image %>
+        <div class="form-group">
+          <label for="user_introduction">Introduction</label>
+          <%= f.text_area :introduction, class:"form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Update User" %>
+        </div>
+      <% end %>  
+    </div>
+  </div>
+</div>
