@@ -6,8 +6,18 @@ class UsersController < ApplicationController
     @user = current_user
     @users = User.all
     @book = Book.new
-    
+    @not_users = User.where.not(id: current_user.id)
   end
+  
+  def followings
+    user = User.find(params[:id])
+    @users = user.followings
+  end
+  
+  def followers
+    user = User.find(params[:id])
+    @users = user.followers
+  end  
 
   def show
     @user = User.find(params[:id])
