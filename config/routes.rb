@@ -15,5 +15,7 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end  
   
+  get "serch" => "searches#search"
+  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
